@@ -1,5 +1,6 @@
 import open3d as o3d
 import numpy as np
+from PIL import Image
 
 
 def main():
@@ -17,15 +18,33 @@ def main():
     # # o3d.visualization.draw_geometries([mesh, pcd])
     # o3d.visualization.draw_geometries([mesh])
 
-    true = 0
-    false = 0
-    for i in range(100000):
-        if np.random.randint(2):
-            true += 1
-        else:
-            false += 1
+    # true = 0
+    # false = 0
+    # for i in range(100000):
+    #     if np.random.randint(2):
+    #         true += 1
+    #     else:
+    #         false += 1
+    #
+    # print(true, false)
 
-    print(true, false)
+    img1 = Image.open("/nfs/DataArchive/DCPR-GAN-Data/pixel2style2pixel_inpainting/train/3-Preparation/data0001.png")
+    img1 = img1.convert('L')
+    # img1 = img1.convert('RGB')
+    img2 = Image.open("/nfs/DataArchive/DCPR-GAN-Data/pixel2style2pixel_inpainting/train/1-Opposing_teeth/data0001.png")
+    img2 = img2.convert('L')
+    # img2 = img2.convert('RGB')
+
+    img1 = np.expand_dims(np.array(img1), axis=2)
+    img2 = np.expand_dims(np.array(img2), axis=2)
+
+    # to_im = np.concatenate((img1, img2), axis=2)
+    to_im = Image.fromarray(np.concatenate((img1, img2), axis=2))
+    print(to_im.size)
+    print(to_im)
+    print(len(to_im.mode))
+    # print(np.max(to_im))
+
 
 if __name__ == '__main__':
     main()

@@ -72,7 +72,7 @@ class ImagesDatasetToothInpainting(Dataset):
 
 class ImagesDatasetWithOpposing(Dataset):
 
-    def __init__(self, prepare_root, opposing_root, object_root, opts, target_transform=None, source_transform=None):
+    def __init__(self, prepare_root, opposing_root, object_root, opts, target_transform=None, source_transform=None, flip=None):
         self.prepare_paths = sorted(data_utils.make_dataset(prepare_root))
         self.opposing_paths = sorted(data_utils.make_dataset(opposing_root))
         self.object_paths = sorted(data_utils.make_dataset(object_root))
@@ -83,9 +83,10 @@ class ImagesDatasetWithOpposing(Dataset):
         self.source_transform = source_transform
         self.target_transform = target_transform
         self.opts = opts
+        self.flip = flip
 
     def __len__(self):
-        return len(self.source_paths)
+        return len(self.prepare_paths)
 
     def __getitem__(self, index):
         prepare_path = self.prepare_paths[index]
@@ -97,17 +98,24 @@ class ImagesDatasetWithOpposing(Dataset):
         opposing_im = opposing_im.convert('L')
 
         object_path = self.target_paths[index]
-        object_im = Image.open(object_path).convert('RGB')
+        to_im = Image.open(object_path).convert('RGB')
 
         assert os.path.basename(prepare_path) == os.path.basename(opposing_path) == os.path.basename(object_path), \
             "Image name should be same"
+
+        prepare_im = np.expand_dims(np.array(prepare_im), axis=2)
+        opposing_im = np.expand_dims(np.array(opposing_im), axis=2)
+        from_im = Image.fromarray(np.concatenate((prepare_im, opposing_im), axis=2))
+
+        if self.flip:
+            if np.random.randint(2):
+                from_im = from_im.transpose(method=Image.FLIP_LEFT_RIGHT)
+                to_im = to_im.transpose(method=Image.FLIP_LEFT_RIGHT)
 
         if self.target_transform:
             to_im = self.target_transform(to_im)
 
         if self.source_transform:
-            from_im = self.source_transform(object_im)
-        else:
-            from_im = to_im
+            from_im = self.source_transform(from_im)
 
         return from_im, to_im
