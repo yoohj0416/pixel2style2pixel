@@ -47,9 +47,18 @@ DATASETS = {
 	},
 	'tooth_inpainting': {
 		'transforms': transforms_config.ToothInpaintingTransforms,
-		'train_source_root': dataset_paths['toothA_train'],
-		'train_target_root': dataset_paths['toothB_train'],
-		'test_source_root': dataset_paths['toothA_test'],
-		'test_target_root': dataset_paths['toothB_test'],
+		'train_source_root': dataset_paths['tooth_prepare_train'],
+		'train_target_root': dataset_paths['tooth_object_train'],
+		'test_source_root': dataset_paths['tooth_prepare_test'],
+		'test_target_root': dataset_paths['tooth_object_test'],
+	},
+	'tooth_inpainting_w_opposing': {
+		'transforms': transforms_config.ToothInpaintingTransforms,
+		'train_prepare_root': dataset_paths['tooth_prepare_train'],
+		'train_opposing_root': dataset_paths['tooth_opposing_train'],
+		'train_object_root': dataset_paths['tooth_object_train'],
+		'test_prepare_root': dataset_paths['tooth_prepare_test'],
+		'test_opposing_root': dataset_paths['tooth_opposing_test'],
+		'test_object_root': dataset_paths['tooth_object_test'],
 	},
 }
