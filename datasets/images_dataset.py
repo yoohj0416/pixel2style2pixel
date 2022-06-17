@@ -97,7 +97,7 @@ class ImagesDatasetWithOpposing(Dataset):
         opposing_im = Image.open(opposing_path)
         opposing_im = opposing_im.convert('L')
 
-        object_path = self.target_paths[index]
+        object_path = self.object_paths[index]
         to_im = Image.open(object_path).convert('RGB')
 
         assert os.path.basename(prepare_path) == os.path.basename(opposing_path) == os.path.basename(object_path), \
