@@ -45,6 +45,8 @@ def main():
     print(len(to_im.mode))
     # print(np.max(to_im))
 
+    zero_im = np.expand_dims(np.zeros(to_im.size), axis=2)
+    print(zero_im.shape)
 
 if __name__ == '__main__':
     main()
