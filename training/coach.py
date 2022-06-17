@@ -205,11 +205,15 @@ class Coach:
             train_dataset = ImagesDatasetWithOpposing(prepare_root=dataset_args['train_prepare_root'],
                                                       opposing_root=dataset_args['train_opposing_root'],
                                                       object_root=dataset_args['train_object_root'],
+                                                      source_transform=transforms_dict['transform_source'],
+                                                      target_transform=transforms_dict['transform_gt_train'],
                                                       opts=self.opts,
                                                       flip=self.opts.horizontal_flip)
             test_dataset = ImagesDatasetWithOpposing(prepare_root=dataset_args['train_prepare_root'],
                                                      opposing_root=dataset_args['train_opposing_root'],
                                                      object_root=dataset_args['train_object_root'],
+                                                     source_transform=transforms_dict['transform_source'],
+                                                     target_transform=transforms_dict['transform_gt_train'],
                                                      opts=self.opts)
         else:
             train_dataset = ImagesDataset(source_root=dataset_args['train_source_root'],
