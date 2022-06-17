@@ -103,7 +103,7 @@ class ImagesDatasetWithOpposing(Dataset):
         assert os.path.basename(prepare_path) == os.path.basename(opposing_path) == os.path.basename(object_path), \
             "Image name should be same"
 
-        zero_im = np.expand_dims(np.zeros(prepare_im.size), axis=2)
+        zero_im = np.expand_dims(np.zeros(prepare_im.size, dtype=np.uint8), axis=2)
         prepare_im = np.expand_dims(np.array(prepare_im), axis=2)
         opposing_im = np.expand_dims(np.array(opposing_im), axis=2)
         from_im = Image.fromarray(np.concatenate((prepare_im, opposing_im, zero_im), axis=2))

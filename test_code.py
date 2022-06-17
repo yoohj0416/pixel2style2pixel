@@ -35,18 +35,23 @@ def main():
     img2 = img2.convert('L')
     # img2 = img2.convert('RGB')
 
+    zero_im = np.expand_dims(np.zeros(img2.size, dtype=np.uint8), axis=2)
     img1 = np.expand_dims(np.array(img1), axis=2)
     img2 = np.expand_dims(np.array(img2), axis=2)
 
-    # to_im = np.concatenate((img1, img2), axis=2)
-    to_im = Image.fromarray(np.concatenate((img1, img2), axis=2))
+    print(img1. shape)
+    print(img2. shape)
+    print(zero_im. shape)
+
+    # to_im = np.concatenate((img1, img2, zero_im), axis=2)
+    to_im = Image.fromarray(np.concatenate((img1, img2, zero_im), axis=2))
+    # print(to_im.shape)
     print(to_im.size)
     print(to_im)
-    print(len(to_im.mode))
+    # print(len(to_im.mode))
     # print(np.max(to_im))
 
-    zero_im = np.expand_dims(np.zeros(to_im.size), axis=2)
-    print(zero_im.shape)
+
 
 if __name__ == '__main__':
     main()
