@@ -202,16 +202,14 @@ class Coach:
                                                         target_transform=transforms_dict['transform_test'],
                                                         opts=self.opts)
         elif self.opts.dataset_type == 'tooth_inpainting_w_opposing':
-            train_dataset = ImagesDatasetWithOpposing(source_root=dataset_args['train_source_root'],
-                                                      target_root=dataset_args['train_target_root'],
-                                                      source_transform=transforms_dict['transform_source'],
-                                                      target_transform=transforms_dict['transform_gt_train'],
+            train_dataset = ImagesDatasetWithOpposing(prepare_root=dataset_args['train_prepare_root'],
+                                                      opposing_root=dataset_args['train_opposing_root'],
+                                                      object_root=dataset_args['train_object_root'],
                                                       opts=self.opts,
                                                       flip=self.opts.horizontal_flip)
-            test_dataset = ImagesDatasetWithOpposing(source_root=dataset_args['test_source_root'],
-                                                     target_root=dataset_args['test_target_root'],
-                                                     source_transform=transforms_dict['transform_source'],
-                                                     target_transform=transforms_dict['transform_test'],
+            test_dataset = ImagesDatasetWithOpposing(prepare_root=dataset_args['train_prepare_root'],
+                                                     opposing_root=dataset_args['train_opposing_root'],
+                                                     object_root=dataset_args['train_object_root'],
                                                      opts=self.opts)
         else:
             train_dataset = ImagesDataset(source_root=dataset_args['train_source_root'],
