@@ -2,7 +2,9 @@ import argparse
 import cv2
 from pathlib import Path
 import math
+import numpy as np
 from IQA_pytorch import FSIM, utils
+from image_similarity_measures.quality_metrics import fsim
 
 from sklearn.metrics import mean_squared_error
 from skimage.metrics import structural_similarity as ssim
@@ -54,13 +56,17 @@ def main():
         if mse == 0:
             psnr_list.append(100.0)
         else:
-            psnr_list.append(20 * math.log10(MAX_PIX / math.sqrt(mse)))
+            # psnr_list.append(20 * math.log10(MAX_PIX / math.sqrt(mse)))
+            psnr_list.append(20 * math.log10(1.0 / math.sqrt(mse)))
 
         # calculate SSIM
         ssim_score, _ = ssim(gt_img_norm, out_img_norm, full=True)
         ssim_list.append(ssim_score)
 
-        # # calculate FSIM
+        # calculate FSIM
+        gt_img_norm_expand = np.expand_dims(gt_img_norm, axis=2)
+        out_img_norm_expand = np.expand_dims(out_img_norm, axis=2)
+        fsim_list.append(fsim(gt_img_norm_expand, out_img_norm_expand))
         # fsim = FSIM(channels=1)
         # out_tensor = utils.prepare_image(out_img_norm)
         # gt_tensor = utils.prepare_image(gt_img_norm)
@@ -91,12 +97,14 @@ def main():
                 compare_img_path = between_95_90_dir.joinpath(compare_img_name)
             else:
                 compare_img_path = upper_95_dir.joinpath(compare_img_name)
+            # cv2.imshow('compare_img', compare_img)
+            # cv2.waitKey()
             cv2.imwrite(str(compare_img_path), compare_img)
 
-    print(max(ssim_list), min(ssim_list))
     print(f"RMSE score: {sum(rmse_list) / len(rmse_list):.4f}")
     print(f"PSNR score: {sum(psnr_list) / len(psnr_list):.4f}")
     print(f"SSIM score: {sum(ssim_list) / len(ssim_list):.4f}")
+    print(f"FSIM score: {sum(fsim_list) / len(fsim_list):.4f}")
 
 
 if __name__ == '__main__':

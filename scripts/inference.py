@@ -13,7 +13,7 @@ sys.path.append(".")
 sys.path.append("..")
 
 from configs import data_configs
-from datasets.inference_dataset import InferenceDataset
+from datasets.inference_dataset import InferenceDataset, InferenceDatasetWithOpposing
 from utils.common import tensor2im, log_input_image
 from options.test_options import TestOptions
 from models.psp import pSp
@@ -53,9 +53,15 @@ def run():
     print('Loading dataset for {}'.format(opts.dataset_type))
     dataset_args = data_configs.DATASETS[opts.dataset_type]
     transforms_dict = dataset_args['transforms'](opts).get_transforms()
-    dataset = InferenceDataset(root=opts.data_path,
-                               transform=transforms_dict['transform_inference'],
-                               opts=opts)
+    if opts.dataset_type == 'tooth_inpainting_w_opposing':
+        dataset = InferenceDatasetWithOpposing(prepare_root=opts.prep_path,
+                                               opposing_root=opts.oppo_path,
+                                               transform=transforms_dict['transform_inference'],
+                                               opts=opts)
+    else:
+        dataset = InferenceDataset(root=opts.data_path,
+                                   transform=transforms_dict['transform_inference'],
+                                   opts=opts)
     dataloader = DataLoader(dataset,
                             batch_size=opts.test_batch_size,
                             shuffle=False,
@@ -79,7 +85,10 @@ def run():
 
         for i in range(opts.test_batch_size):
             result = tensor2im(result_batch[i])
-            im_path = dataset.paths[global_i]
+            if opts.dataset_type == 'tooth_inpainting_w_opposing':
+                im_path = dataset.prepare_paths[global_i]
+            else:
+                im_path = dataset.paths[global_i]
 
             if opts.couple_outputs or global_i % 100 == 0:
                 input_im = log_input_image(input_batch[i], opts)
