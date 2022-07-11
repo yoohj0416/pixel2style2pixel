@@ -237,8 +237,6 @@ class Coach:
         loss_dict = {}
         loss = 0.0
         id_logs = None
-        print(f"y size: {y.size()}")
-        print(f"y_hat size: {y_hat.size()}")
         if self.opts.id_lambda > 0:
             loss_id, sim_improvement, id_logs = self.id_loss(y_hat, y, x)
             loss_dict['loss_id'] = float(loss_id)
