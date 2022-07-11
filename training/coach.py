@@ -237,6 +237,8 @@ class Coach:
         loss_dict = {}
         loss = 0.0
         id_logs = None
+        print(f"y size: {y.size()}")
+        print(f"y_hat size: {y_hat.size()}")
         if self.opts.id_lambda > 0:
             loss_id, sim_improvement, id_logs = self.id_loss(y_hat, y, x)
             loss_dict['loss_id'] = float(loss_id)
@@ -267,6 +269,14 @@ class Coach:
             loss_dict['loss_moco'] = float(loss_moco)
             loss_dict['id_improve'] = float(sim_improvement)
             loss += loss_moco * self.opts.moco_lambda
+        if self.opts.l2_lambda_center_crop > 0:
+            loss_l2_center_crop = F.mse_loss(y_hat[:, :, 64:192, 64:192], y[:, :, 64:192, 64:192])
+            loss_dict['loss_l2_center_crop'] = float(loss_l2_center_crop)
+            loss += loss_l2_center_crop * self.opts.l2_lambda_center_crop
+        if self.opts.lpips_lambda_center_crop > 0:
+            loss_lpips_center_crop = self.lpips_loss(y_hat[:, :, 64:192, 64:192], y[:, :, 64:192, 64:192])
+            loss_dict['loss_lpips_center_crop'] = float(loss_lpips_center_crop)
+            loss += loss_lpips_center_crop * self.opts.lpips_lambda_center_crop
 
         loss_dict['loss'] = float(loss)
         return loss, loss_dict, id_logs
