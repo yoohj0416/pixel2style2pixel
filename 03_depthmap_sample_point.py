@@ -10,12 +10,16 @@ def main():
     # plyfiles = glob.glob('/home/malab4/dataArchive/DCPR-GAN-Data/1-Opposing_teeth/*.ply')
     # plyfiles = glob.glob('/home/malab4/dataArchive/DCPR-GAN-Data/2-Object/*.ply')
     # plyfiles = glob.glob('/home/malab4/dataArchive/DCPR-GAN-Data/3-Preparation/*.ply')
-    plyfiles = glob.glob('/home/malab4/dataArchive/DCPR-GAN-Data/4-exception/*.ply')
+    # plyfiles = glob.glob('/home/malab4/dataArchive/DCPR-GAN-Data/4-exception/*.ply')
+    # plyfiles = glob.glob('/nfs/DataArchive/DOF_Data/Test_data_PCD/1-Preparation/*.ply')
+    plyfiles = glob.glob('/nfs/DataArchive/DOF_Data/Test_data_PCD/2-Object/*.ply')
     # SAVE_DIR = '/home/malab4/dataArchive/DCPR-GAN-Data/1-Opposing_teeth_depth'
     # SAVE_DIR = '/home/malab4/dataArchive/DCPR-GAN-Data/2-Object_depth'
     # SAVE_DIR = '/home/malab4/dataArchive/DCPR-GAN-Data/3-Preparation_depth'
     # SAVE_DIR = '/home/malab4/dataArchive/DCPR-GAN-Data/4-exception_depth'
-    SAVE_DIR = '/home/malab4/dataArchive/DCPR-GAN-Data/4-exception_depth__'
+    # SAVE_DIR = '/home/malab4/dataArchive/DCPR-GAN-Data/4-exception_depth__'
+    # SAVE_DIR = '/nfs/DataArchive/DOF_Data/Test_data_Depth/1-Preparation'
+    SAVE_DIR = '/nfs/DataArchive/DOF_Data/Test_data_Depth/2-Object'
 
     if 'opposing' in plyfiles[0].lower():
         is_opposing = True

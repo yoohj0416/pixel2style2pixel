@@ -61,4 +61,11 @@ DATASETS = {
 		'test_opposing_root': dataset_paths['tooth_opposing_test'],
 		'test_object_root': dataset_paths['tooth_object_test'],
 	},
+	'tooth_inpainting_wo_center': {
+		'transforms': transforms_config.ToothInpaintingTransforms,
+		'train_source_root': dataset_paths['tooth_prepare_train'],
+		'train_target_root': dataset_paths['tooth_object_train'],
+		'test_source_root': dataset_paths['tooth_prepare_test'],
+		'test_target_root': dataset_paths['tooth_object_test'],
+	},
 }

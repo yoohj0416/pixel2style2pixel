@@ -215,6 +215,18 @@ class Coach:
                                                      source_transform=transforms_dict['transform_source'],
                                                      target_transform=transforms_dict['transform_gt_train'],
                                                      opts=self.opts)
+        elif self.opts.dataset_type == 'tooth_inpainting_wo_center':
+            train_dataset = ImagesDatasetToothInpaintingWoCenter(source_root=dataset_args['train_source_root'],
+                                                                 target_root=dataset_args['train_target_root'],
+                                                                 source_transform=transforms_dict['transform_source'],
+                                                                 target_transform=transforms_dict['transform_gt_train'],
+                                                                 opts=self.opts,
+                                                                 flip=self.opts.horizontal_flip)
+            test_dataset = ImagesDatasetToothInpaintingWoCenter(source_root=dataset_args['test_source_root'],
+                                                                target_root=dataset_args['test_target_root'],
+                                                                source_transform=transforms_dict['transform_source'],
+                                                                target_transform=transforms_dict['transform_test'],
+                                                                opts=self.opts)
         else:
             train_dataset = ImagesDataset(source_root=dataset_args['train_source_root'],
                                           target_root=dataset_args['train_target_root'],

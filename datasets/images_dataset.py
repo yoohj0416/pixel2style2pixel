@@ -120,3 +120,46 @@ class ImagesDatasetWithOpposing(Dataset):
             from_im = self.source_transform(from_im)
 
         return from_im, to_im
+
+
+class ImagesDatasetToothInpaintingWoCenter(Dataset):
+
+    def __init__(self, source_root, target_root, opts, target_transform=None, source_transform=None, flip=None):
+        self.source_paths = sorted(data_utils.make_dataset(source_root))
+        self.target_paths = sorted(data_utils.make_dataset(target_root))
+        self.source_transform = source_transform
+        self.target_transform = target_transform
+        self.opts = opts
+        self.flip = flip
+
+    def __len__(self):
+        return len(self.source_paths)
+
+    def __getitem__(self, index):
+        from_path = self.source_paths[index]
+        from_im = Image.open(from_path)
+        from_im = from_im.convert('RGB') if self.opts.label_nc == 0 else from_im.convert('L')
+
+        # The value of image's center is replaced with zero
+        w, h = from_im.size
+        lt, ut = w // 2 - w // 2 // 2, w // 2 + w // 2 // 2
+        for i in range(w):
+            for j in range(h):
+                if lt <= i < ut and lt <= j < ut:
+                    from_im[i, j] = (0, 0, 0)
+
+        to_path = self.target_paths[index]
+        to_im = Image.open(to_path).convert('RGB')
+
+        if self.flip:
+            if np.random.randint(2):
+                from_im = from_im.transpose(method=Image.FLIP_LEFT_RIGHT)
+                to_im = to_im.transpose(method=Image.FLIP_LEFT_RIGHT)
+
+        if self.target_transform:
+            to_im = self.target_transform(to_im)
+
+        if self.source_transform:
+            from_im = self.source_transform(from_im)
+
+        return from_im, to_im
