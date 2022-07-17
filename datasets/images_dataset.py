@@ -1,3 +1,4 @@
+import cv2
 from torch.utils.data import Dataset
 from PIL import Image
 from utils import data_utils
@@ -142,11 +143,10 @@ class ImagesDatasetToothInpaintingWoCenter(Dataset):
 
         # The value of image's center is replaced with zero
         w, h = from_im.size
-        lt, ut = w // 2 - w // 2 // 2, w // 2 + w // 2 // 2
-        for i in range(w):
-            for j in range(h):
-                if lt <= i < ut and lt <= j < ut:
-                    from_im[i, j] = (0, 0, 0)
+        lt, ut = w // 2 - w // 2 // 3, w // 2 + w // 2 // 4
+        from_im_np = np.asarray(from_im, dtype=np.uint8)
+        from_im_np[lt:ut, lt:ut, :] = 0
+        from_im = Image.fromarray(from_im_np)
 
         to_path = self.target_paths[index]
         to_im = Image.open(to_path).convert('RGB')
