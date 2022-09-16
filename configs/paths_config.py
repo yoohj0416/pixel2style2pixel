@@ -22,6 +22,14 @@ dataset_paths = {
 	'tooth_prepare_test': '/nfs/DataArchive/DCPR-GAN-Data/pixel2style2pixel_inpainting/test/3-Preparation',
 	'tooth_opposing_test': '/nfs/DataArchive/DCPR-GAN-Data/pixel2style2pixel_inpainting/test/1-Opposing_teeth',
 	'tooth_object_test': '/nfs/DataArchive/DCPR-GAN-Data/pixel2style2pixel_inpainting/test/2-Object',
+	'tooth_dof_prepare_train': '/nfs/DataArchive/DCPR-GAN-Data/DCPR-GAN_Depth_DOF/train/input_Mask',
+	'tooth_dof_opposing_train': '/nfs/DataArchive/DCPR-GAN-Data/DCPR-GAN_Depth_DOF/train/input_Opp',
+	'tooth_dof_gap_train': '/nfs/DataArchive/DCPR-GAN-Data/DCPR-GAN_Depth_DOF/train/input_Gap_Mask',
+	'tooth_dof_object_train': '/nfs/DataArchive/DCPR-GAN-Data/DCPR-GAN_Depth_DOF/train/Obj',
+	'tooth_dof_prepare_test': '/nfs/DataArchive/DCPR-GAN-Data/DCPR-GAN_Depth_DOF/test/input_Mask',
+	'tooth_dof_opposing_test': '/nfs/DataArchive/DCPR-GAN-Data/DCPR-GAN_Depth_DOF/test/input_Opp',
+	'tooth_dof_gap_test': '/nfs/DataArchive/DCPR-GAN-Data/DCPR-GAN_Depth_DOF/test/input_Gap_Mask',
+	'tooth_dof_object_test': '/nfs/DataArchive/DCPR-GAN-Data/DCPR-GAN_Depth_DOF/test/Obj',
 }
 
 model_paths = {

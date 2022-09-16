@@ -1,7 +1,5 @@
 from configs import transforms_config
 from configs.paths_config import dataset_paths
-
-
 DATASETS = {
 	'ffhq_encode': {
 		'transforms': transforms_config.EncodeTransforms,
@@ -68,4 +66,17 @@ DATASETS = {
 		'test_source_root': dataset_paths['tooth_prepare_test'],
 		'test_target_root': dataset_paths['tooth_object_test'],
 	},
+	'tooth_inpainting_w_opposing_gap': {
+		'transforms': transforms_config.ToothInpaintingTransforms,
+		'train_prepare_root': dataset_paths['tooth_dof_prepare_train'],
+		'train_opposing_root': dataset_paths['tooth_dof_opposing_train'],
+		'train_gap_root' : dataset_paths['tooth_dof_gap_train'],
+		'train_object_root': dataset_paths['tooth_dof_object_train'],
+		'test_prepare_root': dataset_paths['tooth_dof_prepare_test'],
+		'test_opposing_root': dataset_paths['tooth_dof_opposing_test'],
+		'test_gap_root': dataset_paths['tooth_dof_gap_test'],
+		'test_object_root': dataset_paths['tooth_dof_object_test'],
+	}
 }
+
+
