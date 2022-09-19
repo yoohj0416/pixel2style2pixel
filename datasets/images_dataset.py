@@ -193,16 +193,20 @@ class ImagesDatasetWithOpposingGap(Dataset):
         opposing_im = Image.open(opposing_path)
         opposing_im = opposing_im.convert('L')
 
+        gap_path = self.gap_paths[index]
+        gap_im = Image.open(gap_path)
+        gap_im = gap_im.convert('L')
+
         object_path = self.object_paths[index]
         to_im = Image.open(object_path).convert('RGB')
 
-        assert os.path.basename(prepare_path) == os.path.basename(opposing_path) == os.path.basename(object_path), \
+        assert prepare_path.split('_')[0] == opposing_path.split('_')[0] == gap_path.split('_')[0] == object_path.split('_')[0], \
             "Image name should be same"
 
-        zero_im = np.expand_dims(np.zeros(prepare_im.size, dtype=np.uint8), axis=2)
         prepare_im = np.expand_dims(np.array(prepare_im), axis=2)
         opposing_im = np.expand_dims(np.array(opposing_im), axis=2)
-        from_im = Image.fromarray(np.concatenate((prepare_im, opposing_im, zero_im), axis=2))
+        gap_im = np.expand_dims(np.array(gap_im), axis=2)
+        from_im = Image.fromarray(np.concatenate((prepare_im, opposing_im, gap_im), axis=2))
 
         if self.flip:
             if np.random.randint(2):
