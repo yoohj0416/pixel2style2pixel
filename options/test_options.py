@@ -15,6 +15,7 @@ class TestOptions:
 		self.parser.add_argument('--data_path', type=str, default='gt_images', help='Path to directory of images to evaluate')
 		self.parser.add_argument('--prep_path', type=str, default='preparation', help='Path to directory of preparation images to evaluate')
 		self.parser.add_argument('--oppo_path', type=str, default='opposing', help='Path to directory of opposing images to evaluate')
+		self.parser.add_argument('--gap_path', type=str, default='gap', help='Path to directory of gap images to evaluate')
 		self.parser.add_argument('--couple_outputs', action='store_true', help='Whether to also save inputs + outputs side-by-side')
 		self.parser.add_argument('--resize_outputs', action='store_true', help='Whether to resize outputs to 256x256 or keep at 1024x1024')
 

@@ -13,7 +13,7 @@ sys.path.append(".")
 sys.path.append("..")
 
 from configs import data_configs
-from datasets.inference_dataset import InferenceDataset, InferenceDatasetWithOpposing
+from datasets.inference_dataset import InferenceDataset, InferenceDatasetWithOpposing, InferenceDatasetWithOpposingGap
 from utils.common import tensor2im, log_input_image
 from options.test_options import TestOptions
 from models.psp import pSp
@@ -58,6 +58,12 @@ def run():
                                                opposing_root=opts.oppo_path,
                                                transform=transforms_dict['transform_inference'],
                                                opts=opts)
+    elif opts.dataset_type == 'tooth_inpainting_w_opposing_gap':
+        dataset = InferenceDatasetWithOpposingGap(prepare_root=opts.prep_path,
+                                                  opposing_root=opts.oppo_path,
+                                                  gap_root=opts.gap_path,
+                                                  transform=transforms_dict['transform_inference'],
+                                                  opts=opts)
     else:
         dataset = InferenceDataset(root=opts.data_path,
                                    transform=transforms_dict['transform_inference'],
