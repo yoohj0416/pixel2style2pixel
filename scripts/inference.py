@@ -93,6 +93,8 @@ def run():
             result = tensor2im(result_batch[i])
             if opts.dataset_type == 'tooth_inpainting_w_opposing':
                 im_path = dataset.prepare_paths[global_i]
+            elif opts.dataset_type == 'tooth_inpainting_w_opposing_gap':
+                im_path = dataset.prepare_paths[global_i]
             else:
                 im_path = dataset.paths[global_i]
 
